@@ -12,11 +12,40 @@ class App extends Component {
     }
 
     this.handleClickButton = this.handleClickButton.bind(this)
+    this.handleClickEqualButton = this.handleClickEqualButton.bind(this)
+    this.handleClickClearButton = this.handleClickClearButton.bind(this)
+    this.isOperand =this.isOperand.bind(this)
   }
 
   handleClickButton(event, value) {
-    this.setState({stack: this.state.stack.push(value)})
-    console.log(this.state.stack.join(''))
+    if (this.isOperand(value)) {
+      var lastCharactor = this.state.stack[this.state.stack.length - 1]
+      if (!this.isOperand(lastCharactor)) {
+        var joined = this.state.stack.concat(value);
+        this.setState({ stack: joined })
+      }
+    } else {
+      joined = this.state.stack.concat(value);
+      this.setState({ stack: joined })
+    }
+  }
+
+  handleClickEqualButton(event) {
+    var lastCharactor = this.state.stack[this.state.stack.length - 1]
+    while (this.isOperand(lastCharactor)) {
+      this.state.stack.pop()
+      lastCharactor = this.state.stack[this.state.stack.length - 1]
+    }
+    this.setState({results: eval(this.state.stack.join('').toString())})
+  }
+  handleClickClearButton(event) {
+    this.setState({ results: 0 })
+    this.setState({ stack: [] })
+  }
+  isOperand(key) {
+    if ((key == '+') || (key == '-') || (key == '*') || (key == '/')){
+      return true
+    }
   }
 
   componentWillMount() {
@@ -32,25 +61,33 @@ class App extends Component {
   }
 
   render() {
-    let buttons = []
+    let buttons = [<Button key={0} onButtonClick={this.handleClickButton} value={0} />]
+    let operandButtons = []
     let operands = ['+', '-','*','/']
-    for (var i = 0; i <=9; i++) {
-      buttons.push(<Button key={i} onButtonClick={this.handleClickButton} value={i} />)
+
+    for (var i = 1; i <=7; i+=3) {
+      buttons.push(<div><Button key={i} onButtonClick={this.handleClickButton} value={i} /><Button key={i+1} onButtonClick={this.handleClickButton} value={i+1} /><Button key={i+2} onButtonClick={this.handleClickButton} value={i+2} /></div>)
+    }
+    for (var i = 0; i <= 3; i++) {
+      operandButtons.push(<Button key={operands[i]} onButtonClick={this.handleClickButton} value={operands[i]} />)
     }
     return (
       <React.Fragment>
-        <span>{}</span>
-        <div>
-          <Button onButtonClick={this.handleClickButton} value={'+'} />
-          <Button onButtonClick={this.handleClickButton} value={'-'} />
-          <Button onButtonClick={this.handleClickButton} value={'*'} />
-          <Button onButtonClick={this.handleClickButton} value={'/'} />
+        <h2>Calculator</h2>
+        <div class="input-calculator">
+          <span>{this.state.stack.join('') == "" ? 0 : this.state.stack.join('') }</span>
+        </div>
+        <div class="operand-buttons">
+          {operandButtons}
         </div>
         <div>
           {buttons}
         </div>
-        <span>{this.state.results}</span>
-        <Button onButtonClick={this.handleClickButton} value={'Equal'} />
+        <div class="div-results">
+          <span class="results">{this.state.results}</span>  
+        </div>
+        <Button onButtonClick={this.handleClickEqualButton} value={'Equal'} />
+        <Button onButtonClick={this.handleClickClearButton} value={'Clear'} />
       </React.Fragment>
     );
   }
