@@ -26,3 +26,24 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+.results {
+  font-size: 28px;
+}
+.div-results {
+  width: 300px;
+  text-align: center;
+  margin: 20px;
+}
+.operand-buttons {
+
+}
+.input-calculator {
+  width: 300px;
+  padding: 6px;
+  border: 1px solid;
+  margin: 20px 0;
+  text-align: right;
+}
+.input-calculator span {
+  font-size: 22px;
+}
