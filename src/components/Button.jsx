@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Button.css';
+import '../styles/Button.css';
 
 class Button extends Component {
   constructor(props) {
@@ -10,10 +10,10 @@ class Button extends Component {
   handleClick(event) {
     this.props.onButtonClick(event, this.props.value)
   }
-
+  
   render() {
     return (
-      <button onClick={this.handleClick}>{this.props.value}</button>
+      <button className={this.props.className} onClick={this.handleClick}>{this.props.value}</button>
     );
   }
 }

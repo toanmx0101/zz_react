@@ -6,4 +6,10 @@ button {
   border-radius: 2px;
   font-size: 15px;
   margin: 4px;
+  cursor: pointer;
+}
+.clear-history {
+  border: 0;
+  font-size: 14px;
+  margin: 0;
 }

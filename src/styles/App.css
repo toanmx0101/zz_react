@@ -29,6 +29,14 @@
 .results {
   font-size: 28px;
 }
+.calculator {
+  float: left;
+  width: 50%;
+}
+.history {
+  float: right;
+  width: 50%;
+}
 .div-results {
   width: 300px;
   text-align: center;
