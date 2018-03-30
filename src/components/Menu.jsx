@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import '../styles/Button.css';
 import Button from './Button'
+import PropTypes from 'prop-types';
+import ClearButton from'./buttons/ClearButton'
+import EqualButton from'./buttons/EqualButton'
+import NumberButton from'./buttons/NumberButton'
+import OperandButton from'./buttons/OperandButton'
+
 const NUMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 const DISPLAY_EACH_SLICE = 3
 
@@ -31,6 +37,10 @@ class Menu extends Component {
   }
 
   handleClickEqualButton(event) {
+    console.log(this.equalButton)
+    console.log(this.equalButton.className)
+
+
     var lastCharactor = this.state.stack[this.state.stack.length - 1]
     while (this.isOperand(lastCharactor)) {
       this.state.stack.pop()
@@ -68,23 +78,21 @@ class Menu extends Component {
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate")
     if (this.prev.length > 0) {
       this.setState({stack: this.prev})
       this.prev = []
     }
   }
   render() {
-    console.log("Render")
-    let buttons = [<Button key={0} onButtonClick={this.handleClickButton.bind(this)} value={0} />]
+    let buttons = [<NumberButton key={0} className="number-button" onButtonClick={this.handleClickButton.bind(this)} value={0} />]
     let operandButtons = []
     let operands = ['+', '-','*','/', 'log', '(', ')', ', ', 'pow']
     //TODO:  viet lai theo map
   
     for (var i = 1; i <= NUMBERS.length - DISPLAY_EACH_SLICE ; i+= DISPLAY_EACH_SLICE) {
-      buttons.push(<div key={i}><Button onButtonClick={this.handleClickButton.bind(this)} value={i} /><Button onButtonClick={this.handleClickButton.bind(this)} value={i+1} /><Button onButtonClick={this.handleClickButton.bind(this)} value={i+2} /></div>)
+      buttons.push(<div key={i}><NumberButton className="number-button" onButtonClick={this.handleClickButton.bind(this)} value={i} /><NumberButton className="number-button" onButtonClick={this.handleClickButton.bind(this)} value={i+1} /><NumberButton className="number-button" onButtonClick={this.handleClickButton.bind(this)} value={i+2} /></div>)
     }
-    operandButtons = operands.map((operand) => <Button key={operand} onButtonClick={this.handleClickButton.bind(this)} value={operand} />);
+    operandButtons = operands.map((operand) => <OperandButton className="operand-button" key={operand} onButtonClick={this.handleClickButton.bind(this)} value={operand} />);
     return (
       <React.Fragment>
         <Button onButtonClick={this.handleClickDeleteButton.bind(this)} value={'Del'} />
@@ -94,10 +102,24 @@ class Menu extends Component {
         <div>
           {buttons}
         </div>
-        <Button onButtonClick={this.handleClickEqualButton.bind(this)} value={'Equal'} />
-        <Button onButtonClick={this.handleClickClearButton.bind(this)} value={'Clear'} />
+        <EqualButton className="equal-button" ref={(button) => { this.equalButton = button; }} onButtonClick={this.handleClickEqualButton.bind(this)} value={'Equal'} />
+        <ClearButton className="clear-button" onButtonClick={this.handleClickClearButton.bind(this)} value={'Clear'} />
       </React.Fragment>
     );
   }
 }
- export default Menu;
+Menu.defaultProps = {
+  onOperatorButtonChange: () => {},
+  onButtonEqualChange: () => {}, 
+  onButtonClearChange:() => {}, 
+  onButtonDelChange: () => {},
+  prev: []
+};
+Menu.propTypes = {
+  prev: PropTypes.oneOfType([ PropTypes.string, PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]))])
+}
+
+export default Menu;

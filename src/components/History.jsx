@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Span from './Span'
 import Button from './Button'
+import PropTypes from 'prop-types';
 
 class History extends Component {
 
@@ -29,4 +30,11 @@ class History extends Component {
     );
   }
 }
- export default History;
+History.propTypes = {
+  listHistory: PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.object
+  ]))
+}
+export default History;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/Button.css';
+import PropTypes from 'prop-types';
 
 class Button extends Component {
   constructor(props) {
@@ -13,8 +14,19 @@ class Button extends Component {
   
   render() {
     return (
-      <button className={this.props.className} onClick={this.handleClick}>{this.props.value}</button>
+      <button ref={this.props.buttonRef} className={this.props.className} onClick={this.handleClick}>{this.props.value}</button>
     );
   }
 }
- export default Button;
+Button.defaultProps = {
+  onButtonClick: () => {},
+}
+Button.propTypes = {
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  className: PropTypes.string
+}
+
+export default Button;

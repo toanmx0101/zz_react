@@ -13,3 +13,12 @@ button {
   font-size: 14px;
   margin: 0;
 }
+.equal-button {
+  background: blue;
+}
+.clear-button {
+  background: yellow;
+}
+.operand-button {
+  background: #D5D5D5;
+}

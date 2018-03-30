@@ -8,7 +8,6 @@ import History from './History'
 class App extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
       input: '',
       results: 0,
@@ -38,11 +37,16 @@ class App extends Component {
     this.setState({prev: operator.input })
     this.setState({input: operator.input })
   }
+  componentDidMount() {
+    console.log("======DID MOUNT=====")
+  }
   render() {
+    console.log("======RENDER=====")
     return (
       <React.Fragment>
         <div className="calculator">
           <h2>Calculator 
+          
             {this.state.history.length >= 1 && 
               <Button className="clear-history" onButtonClick={this.onButtonBackClick.bind(this)} value='Back'/>
             }
