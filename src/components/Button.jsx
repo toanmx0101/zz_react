@@ -11,7 +11,7 @@ class Button extends Component {
   handleClick(event) {
     this.props.onButtonClick(event, this.props.value)
   }
-  
+
   render() {
     return (
       <button ref={this.props.buttonRef} className={this.props.className} onClick={this.handleClick}>{this.props.value}</button>
