@@ -38,10 +38,8 @@ class Calculator extends Component {
     this.setState({input: operator.input })
   }
   componentDidMount() {
-    console.log("======DID MOUNT=====")
   }
   render() {
-    console.log("======RENDER=====")
     return (
       <div>
         <div className="calculator">

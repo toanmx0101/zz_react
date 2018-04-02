@@ -37,10 +37,6 @@ class Menu extends Component {
   }
 
   handleClickEqualButton(event) {
-    console.log(this.equalButton)
-    console.log(this.equalButton.className)
-
-
     var lastCharactor = this.state.stack[this.state.stack.length - 1]
     while (this.isOperand(lastCharactor)) {
       this.state.stack.pop()
