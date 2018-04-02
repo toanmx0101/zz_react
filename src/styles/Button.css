@@ -1,0 +1,24 @@
+button {
+  padding: 6px 48px;
+  background: transparent;
+  outline: none;
+  border: 1px solid;
+  border-radius: 2px;
+  font-size: 15px;
+  margin: 4px;
+  cursor: pointer;
+}
+.clear-history {
+  border: 0;
+  font-size: 14px;
+  margin: 0;
+}
+.equal-button {
+  background: blue;
+}
+.clear-button {
+  background: yellow;
+}
+.operand-button {
+  background: #D5D5D5;
+}
