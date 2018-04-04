@@ -1,6 +1,8 @@
 import React from 'react';
 import '../../styles/App.css'
 import Span from '../Span.jsx'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 const IMAGE_TYPE = 1
 const TEXT_TYPE = 2
 const LONG_TEXT_TYPE = 3
@@ -11,61 +13,52 @@ function withEditViewWrapper(WrappedComponent) {
       super(props);
       this.state = {
         Newext_position: props.position,
-        currentPos: props.position,
         content: props.content
       }
       this.onUpSpanClick = this.onUpSpanClick.bind(this)
-      this.next_position = this.props.position
     }
-
     onUpSpanClick() {
-      let {currentPos} = this.state
-      this.props.handleChangePosition(currentPos - 1, currentPos)
+      this.props.actions.moveUpItem(this.props.position)
     }
-
     onDownSpanClick() {
-      let {currentPos} = this.state
-      if (currentPos + 1 < this.props.length) {
-        this.props.handleChangePosition(currentPos + 1, currentPos)  
+      if (this.props.position + 1 < this.props.length) {
+        this.props.actions.moveDownItem(this.props.position)
       }
     }
     onTopSpanClick() {
-      let {currentPos} = this.state
-      this.props.handleChangePosition(0 , currentPos)
+      this.props.actions.moveToTopItem(this.props.position)
     }
     onBottomSpanClick() {
-      let {currentPos} = this.state
-      this.props.handleChangePosition(this.props.length - 1 , currentPos)
+      this.props.actions.moveToBottomItem(this.props.position)
     }
     onDeleteSpanClick() {
-      let {currentPos} = this.state
-      this.props.handleDeleteItem(currentPos)
+      this.props.actions.deleteArticle(this.props.position)
     }
     onEditSpanClick() {
-      this.props.handleEditView(this.props.position, true)
+      this.props.actions.editArticle(this.props.position)
     }
     onNewSpanClick() {
     }
     onSaveEditSpanClick() {
-      this.props.handleEditContent(this.props.position)
+      if (this.props.position == this.props.editPosition) {
+        this.props.actions.saveEditArticle({position: this.props.position, content: this.props.editContent })
+      } else {
+        this.props.actions.cancelEditArticle(this.props.position)
+      }
     }
     onCancelEditSpanClick() {
-      this.props.handleEditView(this.props.position, false)
+      this.props.actions.cancelEditArticle(this.props.position)
     }
     onNewTextSpanClick() {
-      let {currentPos} = this.state
-      this.props.handleNewElement(currentPos, TEXT_TYPE, "", true)
+      this.props.actions.newArticle({position: this.props.position, type: TEXT_TYPE, content: "", position: this.props.position})
     }
     onNewLongTextSpanClick() {
-      let {currentPos} = this.state
-      this.props.handleNewElement(currentPos, LONG_TEXT_TYPE, "", true)
+      this.props.actions.newArticle({position: this.props.position, type: LONG_TEXT_TYPE , content: "", position: this.props.position})
     }
     onNewImageSpanClick() {
-      let {currentPos} = this.state
-      this.props.handleNewElement(currentPos, IMAGE_TYPE, "", true)
+      this.props.actions.newArticle({position: this.props.position, type: IMAGE_TYPE, content: "", position: this.props.position})
     }
     render() {
-      
       return (
         <div className="wrapper">
           <div className="edit-view">
@@ -87,7 +80,6 @@ function withEditViewWrapper(WrappedComponent) {
                   </div>
                   <Span className="xx" content="Edit" onSpanClick={this.onEditSpanClick.bind(this)}/>
                   <Span className="xx" content="Delete" onSpanClick={this.onDeleteSpanClick.bind(this)}/>
-                  
                 </div>
                 <div ref="move_control" className="move-control">
                   <Span content="Up" onSpanClick={this.onUpSpanClick}/>
