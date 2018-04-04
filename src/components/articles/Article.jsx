@@ -31,47 +31,48 @@ class Article extends Component {
   }
   render() {
     const listContent = []
-    for (var i = 0; i <= this.props.list.length - 1; i++) {
-      if (this.props.list[i].type === IMAGE_TYPE) {
+    for (var i = 0; i <= this.props.list.size - 1; i++) {
+      if (this.props.list.get(i).get('type') === IMAGE_TYPE) {
+        console.log("xxx")
         listContent.push(
           <Image
-            focus={this.props.list[i].focus}
-            content={this.props.list[i].content}
+            focus={this.props.list.get(i).get('focus')}
+            content={this.props.list.get(i).get('content')}
             key={i}
-            id={this.props.list[i].id}
+            id={this.props.list.get(i).get('id')}
             position={i}
-            length={this.props.list.length}
-            type={this.props.list[i].type}
+            length={this.props.list.size}
+            type={this.props.list.get(i).get('type')}
             editPosition={this.state.editPosition}
             editContent={this.state.editContent}
             handleChangeInput={this.handleChangeInput.bind(this)}
           />
         )
-      } else if (this.props.list[i].type === TEXT_TYPE) {
+      } else if (this.props.list.get(i).get('type') === TEXT_TYPE) {
         listContent.push(
           <Text
+            focus={this.props.list.get(i).get('focus')}
+            content={this.props.list.get(i).get('content')}
             key={i}
-            id={this.props.list[i].id}
-            focus={this.props.list[i].focus}
-            content={this.props.list[i].content}
+            id={this.props.list.get(i).get('id')}
             position={i}
-            length={this.props.list.length}
-            type={this.props.list[i].type}
+            length={this.props.list.size}
+            type={this.props.list.get(i).get('type')}
             editPosition={this.state.editPosition}
             editContent={this.state.editContent}
             handleChangeInput={this.handleChangeInput.bind(this)}
             />
           )
-      } else if (this.props.list[i].type === LONG_TEXT_TYPE) {
+      } else if (this.props.list.get(i).get('type')=== LONG_TEXT_TYPE) {
         listContent.push(
           <LongText
-            focus={this.props.list[i].focus}
-            content={this.props.list[i].content}
+            focus={this.props.list.get(i).get('focus')}
+            content={this.props.list.get(i).get('content')}
             key={i}
-            id={this.props.list[i].id}
+            id={this.props.list.get(i).get('id')}
             position={i}
-            length={this.props.list.length}
-            type={this.props.list[i].type}
+            length={this.props.list.size}
+            type={this.props.list.get(i).get('type')}
             editPosition={this.state.editPosition}
             editContent={this.state.editContent}
             handleChangeInput={this.handleChangeInput.bind(this)}
@@ -91,7 +92,7 @@ class Article extends Component {
 export default connect(
   (state) => {
     return {
-      list: state.articles.list
+      list: state.articles.get('list')
     }
   },
   (dispatch) => ({

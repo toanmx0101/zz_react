@@ -4,7 +4,7 @@ import '../../styles/App.css';
 import withEditViewWrapper from '../commons/with_edit_view_wrapper.jsx'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
+import { Map, List } from 'immutable'
 class Text extends Component {
 
   handleChange(event) {
@@ -30,8 +30,9 @@ const textWithWrapper = withEditViewWrapper(Text)
 
 const textRedux = connect(
   (state) => {
+
     return {
-      list: state.articles.list
+      list: state.articles.get('list')
     }
   },
   (dispatch) => ({

@@ -4,6 +4,7 @@ import '../../styles/App.css';
 import withEditViewWrapper from '../commons/with_edit_view_wrapper.jsx'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Map, List } from 'immutable'
 
 class Image extends Component {
   constructor(props) {
@@ -58,7 +59,7 @@ const imageWithWrapper = withEditViewWrapper(Image)
 const imageRedux = connect(
   (state) => {
     return {
-      list: state.articles.list
+      list: state.articles.get('list')
     }
   },
   (dispatch) => ({

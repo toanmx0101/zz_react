@@ -13,7 +13,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div class="xxx">
+        <div className="xxx">
           <div>
             <ul>
               <li><Link to="/">Home</Link></li>
