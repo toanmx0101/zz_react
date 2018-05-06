@@ -36,24 +36,31 @@ const articles = (state = fromJS(initialState), action) => {
 
     case 'DELETE_ARTICLE':
       return state.deleteIn(['list', action.payload])
-      
+
     case 'NEW_ARTICLE':
       let articles = state.get('list')
       state = state.setIn(['list'], articles.insert(action.payload.position, Map({focus: true, type: action.payload.type, content: ''})))
       return state
-      
+
     case 'MOVE_UP':
-      return 
-      
+      let articles = listArticle.get(action.payload.position)
+      state = state.setIn(['list'], state.get('list').delete(action.payload.position).insert(action.payload.position - 1, old_article))
+      return state
+
     case 'MOVE_DOWN':
-      return 
+      if (action.payload.position < state.get('list').size - 1) {
+        return state
+      }
+      let old_article = state.get('list').get(action.payload.position)
+      state = state.setIn(['list'], state.get('list').delete(action.payload.position).insert(action.payload.position + 1, old_article))
+      return state
 
     case 'MOVE_TO_TOP':
       return 
 
     case 'MOVE_TO_BOTTOM':
       return 
-    
+
     default:
       return state
   }
